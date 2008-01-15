@@ -1,6 +1,6 @@
 ---
 name: HTTP-MobileAgent-Plugin-ID
-version: 0.0.1
+version: 0.0.2
 author:
   - 'OHTSUKA Ko-hei <nene@kokogiko.net>'
 abstract: Add ID fuctions to HTTP::MobileAgent
@@ -12,17 +12,9 @@ requires:
   Test::Base: 0
   version: 0
 provides:
-  HTTP::MobileAgent:
-    file: lib/HTTP/MobileAgent/Plugin/ID.pm
-  HTTP::MobileAgent::DoCoMo:
-    file: lib/HTTP/MobileAgent/Plugin/ID.pm
-  HTTP::MobileAgent::EZweb:
-    file: lib/HTTP/MobileAgent/Plugin/ID.pm
   HTTP::MobileAgent::Plugin::ID:
     file: lib/HTTP/MobileAgent/Plugin/ID.pm
-    version: 0.0.1
-  HTTP::MobileAgent::Vodafone:
-    file: lib/HTTP/MobileAgent/Plugin/ID.pm
+    version: 0.0.2
 generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

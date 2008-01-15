@@ -4,13 +4,14 @@ use warnings;
 use strict;
 use Carp;
 
-use version; our $VERSION = qv('0.0.1');
+use version; our $VERSION = qv('0.0.2');
 use HTTP::MobileAgent::Plugin::XHTML;
 
 ##########################################
 # Base Module
 
-package HTTP::MobileAgent;
+package # hide from PAUSE 
+       HTTP::MobileAgent;
 
 sub id {
     my $self = shift;
@@ -26,7 +27,8 @@ sub support_id { 0 }
 ##########################################
 # DoCoMo Module
 
-package HTTP::MobileAgent::DoCoMo;
+package # hide from PAUSE
+       HTTP::MobileAgent::DoCoMo;
 
 sub __id { $_[0]->card_id || $_[0]->serial_number }
 
@@ -35,7 +37,8 @@ sub support_id { $_[0]->html_version ? $_[0]->html_version > 2.0 ? 1 : 0 : 1 }
 ##########################################
 # EZWeb Module
 
-package HTTP::MobileAgent::EZweb;
+package # hide from PAUSE
+       HTTP::MobileAgent::EZweb;
 
 sub __id { $_[0]->get_header('x-up-subno') }
 
@@ -44,14 +47,20 @@ sub support_id { 1 }
 ##########################################
 # SoftBank Module
 
-package HTTP::MobileAgent::Vodafone;
+package # hide from PAUSE
+       HTTP::MobileAgent::Vodafone;
 
 sub __id {
     if ($_[0]->is_type_c) {
         return $_[0]->serial_number;
     } else {
         my $juid = $_[0]->get_header('x-jphone-uid');
-        return $juid && $juid eq "" ? undef : $juid;
+        if ($juid && $juid ne "") {
+            $juid =~ s/^.(.+)$/0$1/;
+            return $juid;
+        } else {
+            return;
+        }
     }
 }
 
@@ -67,7 +76,7 @@ HTTP::MobileAgent::Plugin::ID - Add ID fuctions to HTTP::MobileAgent
 
 =head1 VERSION
 
-This document describes HTTP::MobileAgent::Plugin::ID version 0.0.1
+This document describes HTTP::MobileAgent::Plugin::ID version 0.0.2
 
 
 =head1 SYNOPSIS
